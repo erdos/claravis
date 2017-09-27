@@ -10,10 +10,19 @@ A Leiningen plugin for visualizing Clara rule data flow.
 4. In the project folder execute the command: `$ lein claravis my.namespace.core output.png`
 5. See the generated graph in the `output.png` file.
 
+## Example
+
+This is the generated example for the `clara.examples.shopping` namespace of
+the [Clara Examples] (https://github.com/cerner/clara-examples) repository.
+
+![clara shopping example](https://github.com/erdos/claravis/raw/master/doc/out-example.png "Clara Shopping Example")
+
+The tabular data are the **facts** and the brown boxes are the **rules**.
+You can see the queries at the bottom.
 
 ## License
 
-Copyright © 2017 FIXME
+Copyright © 2017 Janos Erdos
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
