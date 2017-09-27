@@ -2,7 +2,7 @@
 
 A Leiningen plugin for visualizing Clara rule data flow.
 
-[Clara Rule Engine](https://github.com/cerner/clara-rules) is a super cool project. 
+[Clara Rule Engine](https://github.com/cerner/clara-rules) is a super cool project.
 But sometimes the data flow can get messy due to the high number of rules and facts.
 This project helps you visualize your data flow in order to catch bugs more efficiently.
 
@@ -14,7 +14,7 @@ This project helps you visualize your data flow in order to catch bugs more effi
 4. In the project folder execute the command: `$ lein claravis my.namespace.core output.png`
 5. See the generated graph in the `output.png` file.
 
-_Pro tip: you can add the plugin to your `profile.clj` instead of `project.clj` if you wish to use it across multiple projects._
+_Pro tip: you can add the plugin to your `~/.lein/profiles.clj` instead of `project.clj` if you wish to use it across multiple projects._
 
 ## Example
 
