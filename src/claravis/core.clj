@@ -9,7 +9,7 @@
 (defn- lhs->types
   "Takes a left hand side part of a clara rule and returns the seq of types."
   [lhs]
-  (doall (keep (some-fn :type (comp :type :from)) lhs)))
+  (doall (keep (some-fn :type (comp :type :from) (comp :type second)) lhs)))
 
 (defn collect-query-vars
   "Collects all vars in namespace that are clara queries."
