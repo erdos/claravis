@@ -150,10 +150,10 @@
                                       id-int :id)
                                 nodes))]
     (tangle/graph->dot nodes edges
-                       {:node default-node-descriptor
-                        :edge default-edge-descriptor
-                        :directed? true
-                        :node->id (comp id-int :id)
+                       {:node             default-node-descriptor
+                        :edge             default-edge-descriptor
+                        :directed?        true
+                        :node->id         (comp id-int :id)
                         :node->descriptor :descriptor})))
 
 (defn render-to-image-file [the-ns image-file]
@@ -161,5 +161,11 @@
     (clojure.java.io/copy
      (tangle/dot->image (ns->dot the-ns) ext)
      image-file)))
+
+(defn main [ns-name file-name]
+  (require (symbol ns-name))
+  (render-to-image-file
+   (the-ns (symbol ns-name))
+   (clojure.java.io/file file-name)))
 
 :ok

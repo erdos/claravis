@@ -1,16 +1,27 @@
 (ns leiningen.claravis
   (:require [claravis.core :as cc]
-            [clojure.java.io]))
+            [clojure.java.io]
+            [leiningen.core.project]
+            [leiningen.core.eval]))
 
-(def claravis-profile '{:dependencies [[claravis "0.1.0-SNAPSHOT"]]})
+(def project-name-set '#{claravis/claravis})
 
-(defn claravis [project ns-name file-name]
-  (let [project (leiningen.core.project/merge-profiles project [claravis-profile])]
+(defn- project->claravis-dep [project]
+  (first (filter #(and (vector? %)
+                       (= 2 (count %))
+                       (contains? project-name-set (first %))
+                       (string? (second %)))
+                 (tree-seq coll? seq project))))
+
+
+(defn- merge-project-dep [project]
+  (let [dep (project->claravis-dep project)]
+    (leiningen.core.project/merge-profiles project [{:dependencies [dep]}])))
+
+
+(defn claravis [project & args]
+  (let [project (merge-project-dep project)]
     (leiningen.core.eval/eval-in-project project
-                                         `(do
-                                            (require '~(symbol ns-name))
-                                            (claravis.core/render-to-image-file
-                                            (the-ns (symbol ~ns-name))
-                                            (clojure.java.io/file ~file-name)))
+                                         `(claravis.core/main ~@args)
                                          '(require 'claravis.core)))
   nil)
