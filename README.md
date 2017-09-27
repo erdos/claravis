@@ -17,7 +17,7 @@ This project helps you visualize your data flow in order to catch bugs more effi
 ## Example
 
 This is the generated example for the `clara.examples.shopping` namespace of
-the [Clara Examples] (https://github.com/cerner/clara-examples) repository.
+the [Clara Examples](https://github.com/cerner/clara-examples) repository.
 
 ![clara shopping example](https://github.com/erdos/claravis/blob/master/doc/shopping-example.png?raw=true "Clara Shopping Example")
 
