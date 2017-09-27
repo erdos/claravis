@@ -2,6 +2,10 @@
 
 A Leiningen plugin for visualizing Clara rule data flow.
 
+[Clara Rule Engine](https://github.com/cerner/clara-rules) is a super cool project. 
+But sometimes the data flow can get messy due to the high number of rules and facts.
+This project helps you visualize your data flow in order to catch bugs more efficiently.
+
 ## Usage
 
 1. Clone this repo somewhere `git clone https://github.com/erdos/claravis`
