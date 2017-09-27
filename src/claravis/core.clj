@@ -162,10 +162,16 @@
      (tangle/dot->image (ns->dot the-ns) ext)
      image-file)))
 
-(defn main [ns-name file-name]
-  (require (symbol ns-name))
-  (render-to-image-file
-   (the-ns (symbol ns-name))
-   (clojure.java.io/file file-name)))
+(defn main
+  [ns-name file-name]
+  (try (require (symbol ns-name))
+       (render-to-image-file
+        (the-ns (symbol ns-name))
+        (clojure.java.io/file file-name))
+       (println "Written file to" file-name)
+       (System/exit 0)
+       (catch java.io.FileNotFoundException e
+         (println "Could not find dependency named" ns-name)
+         (System/exit 1))))
 
 :ok
