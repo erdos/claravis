@@ -15,7 +15,7 @@ A Leiningen plugin for visualizing Clara rule data flow.
 This is the generated example for the `clara.examples.shopping` namespace of
 the [Clara Examples] (https://github.com/cerner/clara-examples) repository.
 
-![clara shopping example](https://github.com/erdos/claravis/raw/master/doc/out-example.png "Clara Shopping Example")
+![clara shopping example](https://github.com/erdos/claravis/blob/master/doc/shopping-example.png?raw=true "Clara Shopping Example")
 
 The tabular data are the **facts** and the brown boxes are the **rules**.
 You can see the queries at the bottom.
