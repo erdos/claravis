@@ -6,14 +6,18 @@
   "Collects all vars in namespace that are clara rules"
   [the-ns] (doall (filter (comp true? :rule meta) (vals (ns-publics the-ns)))))
 
-(defn- lhs->types [lhs]
+(defn- lhs->types
+  "Takes a left hand side part of a clara rule and returns the seq of types."
+  [lhs]
   (doall (keep (some-fn :type (comp :type :from)) lhs)))
 
 (defn collect-query-vars
   "Collects all vars in namespace that are clara queries."
   [the-ns] (doall (filter (comp true? :query meta) (vals (ns-publics the-ns)))))
 
-(defn- all-symbols [expr]
+(defn- all-symbols
+  "Returns a seq of all symbols from an expression. Ignores quoted forms."
+  [expr]
   (->> expr
        (tree-seq #(and (coll? %) (not (and (list? %) (= 'quote (first %))))) seq)
        (filter symbol?)))
@@ -30,7 +34,7 @@
   (assert (var? rule-var))
   (let [ns (-> rule-var meta :ns)]
     {:var          rule-var
-     :ns ns
+     :ns           ns
      :name         (-> rule-var meta :name)
      :input-facts  (->> rule-var deref :lhs lhs->types)
      :output-facts (->> rule-var deref :rhs all-symbols set (keep ctor)
@@ -75,15 +79,14 @@
 
 (def query-descriptor
   "Default descriptor map for query nodes."
-  {:color "#007700", :shape "rect"
-   ;; etc other shapes
-   })
+  {:color "#007700", :shape "rect"})
 
 (defn render-query [query]
-  {:id (:name query), :descriptor (assoc query-descriptor
-                                         :shape :cds
-                                         :margin 0.15
-                                         :label (str (:name query)))})
+  {:id (:name query)
+   :descriptor (assoc query-descriptor
+                      :shape :cds
+                      :margin 0.15
+                      :label (str (:name query)))})
 
 (def fact-descriptor
   "Default descriptor for fact nodes."
@@ -113,11 +116,24 @@
   "Default descriptor for rule nodes."
   {:color "brown" :shape "rect"})
 
-(def default-node-descriptor {:shape :box :fontname "Helvetica" :fontsize "11" :margin "0.05" :width 0 :height 0})
+(def default-node-descriptor
+  {:shape :box
+   :fontname "Helvetica"
+   :fontsize "11"
+   :margin "0.05"
+   :width 0
+   :height 0})
+
+(def default-edge-descriptor
+  {:shape :filled
+   :penwidth 1
+   :arrowhead :normal
+   :arrowsize 0.5})
 
 (defn render-rule [rule]
-  {:id (:name rule),
-   :descriptor (assoc rule-descriptor :label (str (:name rule)))})
+  {:id (:name rule)
+   :descriptor (assoc rule-descriptor
+                      :label (str (:name rule)))})
 
 (defn ns->dot [the-ns]
   (let [{:keys [queries rules facts]} (analyze-ns the-ns)
@@ -135,8 +151,7 @@
                                 nodes))]
     (tangle/graph->dot nodes edges
                        {:node default-node-descriptor
-                        :edge {:shape :filled :penwidth 1
-                               :arrowhead :normal :arrowsize 0.5}
+                        :edge default-edge-descriptor
                         :directed? true
                         :node->id (comp id-int :id)
                         :node->descriptor :descriptor})))
