@@ -6,9 +6,6 @@
   "Collects all vars in namespace that are clara rules"
   [the-ns] (doall (filter (comp true? :rule meta) (vals (ns-publics the-ns)))))
 
-;; (require '[claravis.clara-test])
-;; (collect-rule-vars (the-ns 'claravis.clara-test))
-
 (defn- lhs->types [lhs]
   (doall (keep (some-fn :type (comp :type :from)) lhs)))
 
@@ -28,8 +25,6 @@
                 (.startsWith n "map->") (.substring n 5)
                 (.endsWith n ".")       (.substring n 0 (dec (.length n))))]
     (some-> m symbol)))
-; (ctor '->sdfsdf)
-
 
 (defn analyze-rule [rule-var]
   (assert (var? rule-var))
@@ -42,20 +37,8 @@
                         (map (partial ns-resolve ns)) doall)
      }))
 
-;; maybe memoize?
 (defn collect-rules [the-ns]
   (doall (keep analyze-rule (collect-rule-vars the-ns))))
-
-;; (collect-rules (the-ns 'claravis.clara-test))
-
-(defn collect-fact-types [the-ns]
-  ;; returns a seq of var's in a given namespace
-  ;; does by analyzing
-  ;; look for defrecord's
-  )
-
-;; are ns;s capable of modifying meta map?
-; (meta *ns*)
 
 (defn analyze-query [query-var]
   (assert (var? query-var))
@@ -67,8 +50,6 @@
 
 (defn collect-queries [the-ns]
   (doall (keep analyze-query (collect-query-vars the-ns))))
-
-;; (collect-queries (the-ns 'claravis.clara-test))
 
 (defn collect-facts [the-ns]
   (let [ps (ns-publics the-ns)
@@ -87,15 +68,10 @@
         :fields fields
         }))))
 
-;; (collect-facts (the-ns 'claravis.clara-test))
-
 (defn analyze-ns [the-ns]
   {:queries (collect-queries the-ns)
    :rules   (collect-rules the-ns)
    :facts   (collect-facts the-ns)})
-
-;; TODO: run #'analyze-ns on some test clara namespace
-
 
 (def query-descriptor
   "Default descriptor map for query nodes."
@@ -103,18 +79,15 @@
    ;; etc other shapes
    })
 
-
 (defn render-query [query]
   {:id (:name query), :descriptor (assoc query-descriptor
                                          :shape :cds
                                          :margin 0.15
                                          :label (str (:name query)))})
 
-
 (def fact-descriptor
   "Default descriptor for fact nodes."
   {:color "blue", :shape "rect"})
-
 
 (defn render-fact [fact]
   {:id (:type fact),
@@ -136,7 +109,6 @@
                                       (for [f (:fields fact)]
                                         [:TR [:TD {:CELLBORDER 0} (str f)]])]]]])})
 
-
 (def rule-descriptor
   "Default descriptor for rule nodes."
   {:color "brown" :shape "rect"})
@@ -146,7 +118,6 @@
 (defn render-rule [rule]
   {:id (:name rule),
    :descriptor (assoc rule-descriptor :label (str (:name rule)))})
-
 
 (defn ns->dot [the-ns]
   (let [{:keys [queries rules facts]} (analyze-ns the-ns)
@@ -175,12 +146,5 @@
     (clojure.java.io/copy
      (tangle/dot->image (ns->dot the-ns) ext)
      image-file)))
-
-; (println (ns->dot (the-ns 'claravis.clara-test)) "png")
-
-#_
-(clojure.java.io/copy
- (tangle/dot->image (ns->dot (the-ns 'claravis.clara-test)) "png")
- (clojure.java.io/file "/home/erdos/out-1.png"))
 
 :ok
