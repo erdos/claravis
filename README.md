@@ -21,7 +21,7 @@ _Pro tip: you can add the plugin to your `~/.lein/profiles.clj` instead of `proj
 This is the generated example for the `clara.examples.shopping` namespace of
 the [Clara Examples](https://github.com/cerner/clara-examples) repository.
 
-<div style="text-align:center"><img src="https://github.com/erdos/claravis/blob/master/doc/shopping-example.png?raw=true" /></div>
+<p align="center"><img src="https://github.com/erdos/claravis/blob/master/doc/shopping-example.png?raw=true" /></p>
 
 The tabular data are the **facts** and the brown boxes are the **rules**.
 You can see the queries at the bottom.
