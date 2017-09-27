@@ -14,6 +14,8 @@ This project helps you visualize your data flow in order to catch bugs more effi
 4. In the project folder execute the command: `$ lein claravis my.namespace.core output.png`
 5. See the generated graph in the `output.png` file.
 
+_Pro tip: you can add the plugin to your `profile.clj` instead of `project.clj` if you wish to use it across multiple projects._
+
 ## Example
 
 This is the generated example for the `clara.examples.shopping` namespace of
