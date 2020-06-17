@@ -7,5 +7,4 @@
                  [macroz/tangle "0.2.0"]]
   :eval-in-leiningen true
   :profiles {:dev {:dependencies [[com.cerner/clara-rules "0.16.0"]]
-                   :plugins      [[com.jakemccrary/lein-test-refresh "0.21.1"]
-                                  [claravis "0.1.0-SNAPSHOT"]]}})
+                   :plugins      [[com.jakemccrary/lein-test-refresh "0.21.1"]]}})
