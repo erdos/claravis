@@ -11,8 +11,9 @@ This project helps you visualize your data flow in order to catch bugs more effi
 1. Clone this repo somewhere `git clone https://github.com/erdos/claravis`
 2. Go to repo directory and install mvn dependency: `$ lein install`
 3. Add the following to the `:plugins` section of your `project.clj` file: `[claravis "0.1.0-SNAPSHOT"]`
-4. In the project folder execute the command: `$ lein claravis my.namespace.core output.png`
-5. See the generated graph in the `output.png` file.
+4. Make sure [Graphviz](https://graphviz.org/) is installed in your system.
+5. In the project folder execute the command: `$ lein claravis my.namespace.core output.png`
+6. See the generated graph in the `output.png` file.
 
 _Pro tip: you can add the plugin to your `~/.lein/profiles.clj` instead of `project.clj` if you wish to use it across multiple projects._
 
